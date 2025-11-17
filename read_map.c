@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 17:16:20 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/16 03:52:02 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/17 15:34:20 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,4 +166,3 @@ t_map	read_map(char **av)
 	close(fd);
 	return (map);
 }	
-
