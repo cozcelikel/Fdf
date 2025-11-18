@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 18:15:11 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/17 18:31:22 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/18 21:21:32 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_point
 
 typedef struct s_map
 {
-	int		width;
+	int		*width;
 	int		height;
 	t_point	**points;
 }	t_map;
@@ -59,6 +59,6 @@ int		ft_atoi(const char *str);
 int		ft_atohex(const char *str);
 void	window(t_map map);
 void	draw(t_window *window, t_map map);
-void	draw_line(t_window *window, t_point a, t_point b);
+void	draw_line(t_window *window, t_point a, t_point b, int colar);
 
 #endif

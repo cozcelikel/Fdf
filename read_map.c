@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 17:16:20 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/17 15:34:20 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/18 21:06:43 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	fill_data(t_map *map, int width, char **data, int *y)
 	int	x;
 	int	i;
 
+	width = map->width[*y];
 	x = 0;
 	(*map).points[*y] = malloc(sizeof(t_point) * width);
 	if ((*map).points[*y] == NULL)
@@ -101,6 +102,8 @@ t_map	take_points(t_map map, int fd, int *flag)
 	x = 0;
 	map.width = 0;
 	y = 0;
+	map.width = malloc(sizeof(int) * map.height);
+	//if
 	while (y < map.height)
 	{
 		line = get_next_line(fd);
@@ -116,17 +119,17 @@ t_map	take_points(t_map map, int fd, int *flag)
 			*flag = 0;
 			return (map);
 		}
-		map.width = 0;
-		while (splited[map.width] != NULL)
-			map.width++;
-		if (fill_data(&map, map.width, splited, &y) == -1)
+		map.width[y] = 0;
+		while (splited[map.width[y]] != NULL)
+			map.width[y]++;
+		if (fill_data(&map, map.width[y], splited, &y) == -1)
 		{
-			free_all(splited, map.width);
+			free_all(splited, map.width[y]);
 			*flag = 0;
 			return (map);
 		}
 		i = 0;
-		while (i < map.width)
+		while (i < map.width[y])
 			free(splited[i++]);
 		free(splited);
 		x++;
