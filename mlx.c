@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:22:42 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/17 18:33:00 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/18 22:13:26 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void	window(t_map map)
 	int		bbp;
 	int		endian;
 
-	s_len = 800 * 32;
+	s_len = 1000 * 32;
 	bbp = 32;
 	endian = 0;
 	window.mlx = mlx_init();
-	window.window = mlx_new_window(window.mlx, 800, 800, "Fdf");
+	window.window = mlx_new_window(window.mlx, 1000, 1000, "Fdf");
 	mlx_key_hook(window.window, hook, &window);
 	mlx_hook(window.window, 17, 0, x_hook, &window);
-	window.img = mlx_new_image(window.mlx, 800, 800);
+	window.img = mlx_new_image(window.mlx, 1000, 1000);
 	window.pixel = (int *)mlx_get_data_addr(window.img, &bbp, &s_len, &endian);
 	draw(&window, map);
 	mlx_put_image_to_window(window.mlx, window.window, window.img, 0, 0);
