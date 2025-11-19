@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:31:02 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/19 06:06:19 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/19 17:42:18 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	draw(t_window *window, t_map map)
 				b = cal_new_data(map, x + 1, y, scale);
 				draw_line(window, a, b, map.points[y][x].color);
 			}
-			if (y < map.height - 1 && map.width[y + 1])
+			if (y < map.height - 1 && x < map.width[y + 1])
 			{
 				b = cal_new_data(map, x, y + 1, scale);
 				draw_line(window, a, b, map.points[y][x].color);

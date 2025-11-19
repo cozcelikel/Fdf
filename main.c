@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 17:16:25 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/19 06:00:07 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/19 16:12:05 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ void	free_map(t_map *map)
 	while (y < map->height)
 	{
 		if (map->points[y])
+		{
 			free(map->points[y]);
+		}
 		y++;
 	}
+	free(map->width);
 	free(map->points);
 	map->points = NULL;
 	map->height = 0;
