@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:31:02 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/19 01:53:37 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/19 06:06:19 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,34 @@
 #include <math.h>
 #include <stdlib.h>
 
-int max_width(int *widths, int height)
+int	max_width(int *widths, int height)
 {
-	int max = 0;
-	for (int i = 0; i < height; i++)
+	int	max;
+	int	i;
+
+	i = 0;
+	max = 0;
+	while (i < height)
+	{
 		if (widths[i] > max)
 			max = widths[i];
-	return max;
+		i++;
+	}
+	return (max);
 }
 
 double	compute_final_scale(t_map *map, int win_w, int win_h)
 {
-	int x, y;
-	int max_z = -2147483648;
-	int min_z = 2147483647;
-	int max_w;
+	int		x;
+	int		y;
+	int		max_z = -2147483648;
+	int		min_z = 2147483647;
+	int		max_w;
+	double	scale_z;
 
 	max_w = max_width(map->width, map->height);
 	if (map->height > 500 || max_w > 500)
-		return 0.3;
+		return (0.3);
 
 
 	double scale_x = (win_w * 0.45) / max_w;
@@ -49,7 +58,6 @@ double	compute_final_scale(t_map *map, int win_w, int win_h)
 				min_z = map->points[y][x].z;
 		}
 
-	double scale_z;
 	if (max_z == min_z)
 		scale_z = 9999999;
 	else
@@ -70,7 +78,7 @@ t_point	cal_new_data(t_map map, int x, int y, double scale)
 	double	cos_angle;
 	double	sin_angle;
 
-	cos_angle = 0.8660254;
+	cos_angle = 0.860254;
 	sin_angle = 0.5;
 	res.x = ((map.points[y][x].x - map.points[y][x].y)
 			* cos_angle) * scale;
@@ -78,18 +86,18 @@ t_point	cal_new_data(t_map map, int x, int y, double scale)
 	res.y = ((map.points[y][x].x + map.points[y][x].y)
 			* sin_angle - map.points[y][x].z) * scale;
 
-	res.x += 1000 / 2;
-	res.y += 1000 / 2;
+	res.x += 750;
+	res.y += 700;
 
 	return (res);
 }
 
 void	my_pixel_put(t_window *w, int x, int y, int color)
 {
-	if (x < 0 || x >= 1000 || y < 0 || y >= 1000)
+	if (x < 0 || x >= 1500 || y < 0 || y >= 1500)
 		return ;
 
-	w->pixel[y * 1000 + x] = color;
+	w->pixel[y * 1500 + x] = color;
 }
 
 
@@ -137,7 +145,7 @@ void	draw(t_window *window, t_map map)
 
 	y = 0;
 	x = 0;
-	scale = compute_final_scale(&map, 1000, 1000);
+	scale = compute_final_scale(&map, 1500, 1500);
 	while (y < map.height)
 	{
 		x = 0;

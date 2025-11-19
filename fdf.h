@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 18:15:11 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/18 21:21:32 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/19 05:36:57 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_window
 	void	*window;
 	void	*img;
 	int		*pixel;
+	t_map	*map;
 }	t_window;
 
 char	**ft_split(char const *s, char c);
@@ -57,8 +58,8 @@ t_map	read_map(char **av);
 void	free_all(char **arr, int j);
 int		ft_atoi(const char *str);
 int		ft_atohex(const char *str);
-void	window(t_map map);
+void	window(t_map *map);
 void	draw(t_window *window, t_map map);
 void	draw_line(t_window *window, t_point a, t_point b, int colar);
-
+void	free_map(t_map *map);
 #endif
