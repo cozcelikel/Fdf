@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 18:15:11 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/20 14:43:29 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 15:06:58 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ typedef struct s_line
 
 typedef struct s_scale
 {
-	float	x_scale;
-	float	z_scale;
-	float	y_scale;
-	float	f_scale;
+	float	x;
+	float	z;
+	float	y;
+	float	f;
 }	t_scale;
 
 char	**ft_split(char const *s, char c);

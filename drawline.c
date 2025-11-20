@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:31:02 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/20 14:56:09 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 15:09:29 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,44 +32,33 @@ int	max_width(int *widths, int height)
 	return (max);
 }
 
-double	compute_final_scale(t_map *map, int win_w, int win_h)
+double compute_final_scale(t_map *map, int win_w, int win_h)
 {
-	int		x;
-	int		y;
-	int		max_z = -2147483648;
-	int		min_z = 2147483647;
-	int		max_w;
-	double	scale_z;
+	int	max_w;
+	t_scale	scale;
+	int	z_range;
 
 	max_w = max_width(map->width, map->height);
 	if (map->height > 500 || max_w > 500)
 		return (0.3);
 
+	scale.x = (win_w * 0.45) / max_w;
+	scale.y = (win_h * 0.45) / map->height;
 
-	double scale_x = (win_w * 0.45) / max_w;
-	double scale_y = (win_h * 0.45) / map->height;
+	z_range = compute_z_range(map);
 
-	for (y = 0; y < map->height; y++)
-		for (x = 0; x < map->width[y]; x++)
-		{
-			if (map->points[y][x].z > max_z)
-				max_z = map->points[y][x].z;
-			if (map->points[y][x].z < min_z)
-				min_z = map->points[y][x].z;
-		}
-
-	if (max_z == min_z)
-		scale_z = 9999999;
+	if (z_range == 0)
+		scale.z = 9999999;
 	else
-		scale_z = (win_h * 0.45) / (max_z - min_z);
+		scale.z = (win_h * 0.45) / z_range;
 
-	double final_scale = scale_x;
-	if (scale_y < final_scale)
-		final_scale = scale_y;
-	if (scale_z < final_scale)
-		final_scale = scale_z;
+	scale.f = scale.x;
+	if (scale.y < scale.f)
+		scale.f = scale.y;
+	if (scale.z < scale.f)
+		scale.f = scale.z;
 
-	return final_scale;
+	return (scale.f);
 }
 
 t_point	cal_new_data(t_map map, int x, int y, double scale)
@@ -106,34 +95,26 @@ void	draw_line(t_window *w, t_point a, t_point b, int colar)
 	int		dx;
 	int		dy;
 	int		steps;
-	float	x_inc;
-	float	y_inc;
-	float	x;
-	float	y;
+	t_line	line;
 
 	dx = b.x - a.x;
 	dy = b.y - a.y;
-
 	if (abs(dx) > abs(dy))
 		steps = abs(dx);
 	else
 		steps = abs(dy);
-
-	x_inc = dx / (float)steps;
-	y_inc = dy / (float)steps;
-
-	x = a.x;
-	y = a.y;
-
+	line.x_inc = dx / (float)steps;
+	line.y_inc = dy / (float)steps;
+	line.x = a.x;
+	line.y = a.y;
 	while (steps >= 0)
 	{
-		my_pixel_put(w, (int)x, (int)y, colar);
-		x += x_inc;
-		y += y_inc;
+		my_pixel_put(w, (int)line.x, (int)line.y, colar);
+		line.x += line.x_inc;
+		line.y += line.y_inc;
 		steps--;
 	}
 }
-
 
 void	draw(t_window *window, t_map map)
 {
