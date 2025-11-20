@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:22:42 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/20 16:15:51 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 18:42:22 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	window(t_map *map, int s_len, int endian, int bbp)
 {
 	t_window	window;
 	double		scale;
+	int			z_range;
 
 	window.mlx = mlx_init();
 	if (window.mlx == NULL)
@@ -72,7 +73,8 @@ void	window(t_map *map, int s_len, int endian, int bbp)
 	if (window.pixel == NULL)
 		error_pixel(window, map);
 	window.map = map;
-	scale = compute_final_scale(map, 1500, 1500);
+	z_range = compute_z_range(map);
+	scale = compute_final_scale(map, 1500, 1500, z_range);
 	draw(&window, *map, scale, 0);
 	mlx_put_image_to_window(window.mlx, window.window, window.img, 0, 0);
 	mlx_loop(window.mlx);

@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 18:15:11 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/20 16:29:33 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 18:42:47 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	draw_line(t_window *window, t_point a, t_point b, int colar);
 void	free_map(t_map *map);
 int		give_height(char **av);
 int		compute_z_range(t_map *map);
-double	compute_final_scale(t_map *map, int win_w, int win_h);
+double	compute_final_scale(t_map *map, int win_w, int win_h, int z_range);
 void	my_pixel_put(t_window *w, int x, int y, int color);
 void	error_pixel(t_window window, t_map *map);
 void	error_window(t_window window, t_map *map);

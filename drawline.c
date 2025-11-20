@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:31:02 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/20 17:40:46 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 18:41:32 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,24 @@ int	max_width(int *widths, int height)
 	return (max);
 }
 
-double	compute_final_scale(t_map *map, int win_w, int win_h)
+double	compute_final_scale(t_map *map, int win_w, int win_h, int z_range)
 {
 	int		max_w;
 	t_scale	scale;
-	int		z_range;
 
 	max_w = max_width(map->width, map->height);
 	scale.x = (win_w * 0.45) / max_w;
 	scale.y = (win_h * 0.45) / map->height;
 	scale.f = scale.x;
-	if(scale.x < 0.3 || scale.y < 0.3)
+	if (scale.x < 0.3 || scale.y < 0.3)
 	{
-		if(scale.y < scale.x)
+		if (scale.y < scale.x)
 			return (scale.y);
 		else
 			return (scale.x);
 	}
-	
 	if (map->height > 500 || max_w > 500)
 		return (0.3);
-	z_range = compute_z_range(map);
 	if (z_range == 0)
 		scale.z = 9999999;
 	else
