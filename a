@@ -1,3 +1,28 @@
+void	draw_line(t_window *w, t_point a, t_point b, int colar)
+{
+	int		dx;
+	int		dy;
+	int		steps;
+	t_line	line;
+
+	dx = b.x - a.x;
+	dy = b.y - a.y;
+	if (abs(dx) > abs(dy))
+		steps = abs(dx);
+	else
+		steps = abs(dy);
+	line.x_inc = dx / (float)steps;
+	line.y_inc = dy / (float)steps;
+	line.x = a.x;
+	line.y = a.y;
+	while (steps >= 0)
+	{
+		my_pixel_put(w, (int)line.x, (int)line.y, colar);
+		line.x += line.x_inc;
+		line.y += line.y_inc;
+		steps--;
+	}
+}
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,7 +31,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:31:02 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/20 14:56:09 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:54:49 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

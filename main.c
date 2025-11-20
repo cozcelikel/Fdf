@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 17:16:25 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/19 16:12:05 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 10:56:03 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,29 @@
 #include <stdlib.h>
 #include "mlx.h"
 
+
 void	free_map(t_map *map)
 {
 	int	y;
 
-	y = 0;
-	if (!map || !map->points)
+	if (!map)
 		return ;
 
-	while (y < map->height)
+	if (map->points)
 	{
-		if (map->points[y])
+		y = 0;
+		while (y < map->height)
 		{
-			free(map->points[y]);
+			if (map->points[y])
+				free(map->points[y]);
+			y++;
 		}
-		y++;
+		free(map->points);
 	}
-	free(map->width);
-	free(map->points);
-	map->points = NULL;
-	map->height = 0;
-	map->width = 0;
+	if (map->width)
+		free(map->width);
 }
+
 
 int	main(int ac, char **av)
 {
@@ -44,7 +45,5 @@ int	main(int ac, char **av)
 
 	file_type(ac, av);
 	map = read_map(av);
-	get_next_line(-1);
 	window(&map);
-	free_map(&map);
 }

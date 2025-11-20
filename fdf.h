@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 18:15:11 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/19 05:36:57 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:43:29 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_point
 	int	y;
 	int	z;
 	int	color;
+	int	i;
+	int	j;
 }	t_point;
 
 typedef struct s_map
@@ -42,6 +44,22 @@ typedef struct s_window
 	int		*pixel;
 	t_map	*map;
 }	t_window;
+
+typedef struct s_line
+{
+	float	x_inc;
+	float	y_inc;
+	float	x;
+	float	y;
+}	t_line;
+
+typedef struct s_scale
+{
+	float	x_scale;
+	float	z_scale;
+	float	y_scale;
+	float	f_scale;
+}	t_scale;
 
 char	**ft_split(char const *s, char c);
 int		ft_wordcount(char *str, char c);
@@ -62,4 +80,6 @@ void	window(t_map *map);
 void	draw(t_window *window, t_map map);
 void	draw_line(t_window *window, t_point a, t_point b, int colar);
 void	free_map(t_map *map);
+int		give_height(char **av);
+int		compute_z_range(t_map *map);
 #endif

@@ -6,134 +6,129 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 17:16:20 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/18 21:06:43 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 12:11:46 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/* ************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/15 17:16:20 by cozcelik          #+#    #+#             */
+/*   Updated: 2025/11/18 21:06:43 by cozcelik         ###   ########.fr       */
+/*                                                                            */
+/* ************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include "fdf.h"
 
-void	write_error(void)
-{
-	write(2, "ERROR\n", 6);
-	exit(-1);
-}
-
-void	file_type(int ac, char **av)
-{
-	int	i;
-
-	i = 0;
-	if (ac != 2)
-		write_error();
-	else
-	{
-		while (av[1][i])
-			i++;
-		if (i < 5)
-			write_error();
-		if (av[1][i - 1] != 'f' || av[1][i - 2] != 'd'
-				|| av[1][i - 3] != 'f' || av[1][i - 4] != '.')
-			write_error();
-	}
-}
-
-int	give_height(char **av)
-{
-	int		height;
-	char	*line;
-	int		fd;
-
-	fd = open(av[1], O_RDONLY);
-	if (fd < 0)
-		write_error();
-	height = 0;
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		height++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	close (fd);
-	return (height);
-}
-
-int	fill_data(t_map *map, int width, char **data, int *y)
+int	fill_data(t_map *map, int width, char **data, int y)
 {
 	int	x;
 	int	i;
 
-	width = map->width[*y];
-	x = 0;
-	(*map).points[*y] = malloc(sizeof(t_point) * width);
-	if ((*map).points[*y] == NULL)
+	map->points[y] = malloc(sizeof(t_point) * width);
+	if (!map->points[y])
 		return (-1);
+	x = 0;
 	while (x < width)
 	{
-		(*map).points[*y][x].x = x;
-		(*map).points[*y][x].y = *y;
-		(*map).points[*y][x].z = ft_atoi(data[x]);
+		map->points[y][x].x = x;
+		map->points[y][x].y = y;
+		map->points[y][x].z = ft_atoi(data[x]);
 		i = 0;
 		while (data[x][i] && data[x][i] != ',')
 			i++;
 		if (data[x][i] == ',')
-		{
-			i++;
-			(*map).points[*y][x].color = ft_atohex(data[x] + i);
-		}
+			map->points[y][x].color = ft_atohex(data[x] + i + 1);
 		else
-			(*map).points[*y][x].color = ft_atohex("0xFFFFFF");
+			map->points[y][x].color = ft_atohex("0xFFFFFF");
 		x++;
 	}
 	return (0);
+}
+
+void	split_free(char **splited)
+{
+	int	i;
+
+	if (!splited)
+		return ;
+	i = 0;
+	while (splited[i])
+		free(splited[i++]);
+	free(splited);
+}
+
+int	process_line(t_map *map, char *line, int y)
+{
+	char	**splited;
+	int		width;
+
+	splited = ft_split(line, ' ');
+	if (!splited)
+	{
+		get_next_line(-1);
+		return (0);
+	}
+	width = 0;
+	while (splited[width])
+		width++;
+	map->width[y] = width;
+	if (fill_data(map, width, splited, y) == -1)
+	{
+		split_free(splited);
+		return (0);
+	}
+	split_free(splited);
+	return (1);
 }
 
 t_map	take_points(t_map map, int fd, int *flag)
 {
 	char	*line;
 	int		y;
-	char	**splited;
-	int		x;
-	int		i;
 
-	x = 0;
-	map.width = 0;
 	y = 0;
-	map.width = malloc(sizeof(int) * map.height);
-	//if
+	*flag = 1;
 	while (y < map.height)
 	{
 		line = get_next_line(fd);
-		if (line == NULL)
+		if (!line)
 		{
 			*flag = 0;
-			return (map);
+			break ;
 		}
-		splited = ft_split(line, ' ');
+		if (!process_line(&map, line, y))
+		{
+			free(line);
+			*flag = 0;
+			break ;
+		}
 		free(line);
-		if (splited == NULL)
-		{
-			*flag = 0;
-			return (map);
-		}
-		map.width[y] = 0;
-		while (splited[map.width[y]] != NULL)
-			map.width[y]++;
-		if (fill_data(&map, map.width[y], splited, &y) == -1)
-		{
-			free_all(splited, map.width[y]);
-			*flag = 0;
-			return (map);
-		}
-		i = 0;
-		while (i < map.width[y])
-			free(splited[i++]);
-		free(splited);
-		x++;
 		y++;
+	}
+	return (map);
+}
+
+t_map	read_map_allocte(char **av)
+{
+	t_map	map;
+
+	map.height = give_height(av);
+	map.points = malloc(sizeof(t_point *) * map.height);
+	if (!map.points)
+		write_error();
+	map.width = malloc(sizeof(int) * map.height);
+	if (!map.width)
+	{
+		free(map.points);
+		write_error();
 	}
 	return (map);
 }
@@ -143,29 +138,20 @@ t_map	read_map(char **av)
 	int		fd;
 	t_map	map;
 	int		flag;
-	int		i;
 
-	i = 0;
-	flag = 1;
-	map.height = give_height(av);
-	map.points = malloc(sizeof(t_point *) * map.height);
-	if (map.points == NULL)
-		write_error();
+	map = read_map_allocte(av);
 	fd = open(av[1], O_RDONLY);
-	if (fd == -1)
+	if (fd < 0)
 	{
-		free(map.points);
+		free_map(&map);
 		write_error();
 	}
-	if (map.points == NULL)
-		write_error();
 	map = take_points(map, fd, &flag);
+	close(fd);
 	if (flag == 0)
 	{
-		while (i < map.height)
-			free(map.points[i++]);
-		free(map.points);
+		free_map(&map);
+		write_error();
 	}
-	close(fd);
 	return (map);
-}	
+}

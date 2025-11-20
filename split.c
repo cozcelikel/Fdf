@@ -6,14 +6,13 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 14:44:41 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/15 22:30:12 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 11:49:38 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stddef.h>
 #include "fdf.h"
-
 
 int	ft_wordcount(char *str, char c)
 {

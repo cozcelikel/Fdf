@@ -6,9 +6,14 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 22:35:23 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/16 03:40:35 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 11:52:15 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include "fdf.h"
 
 int	ft_atoi(const char *str)
 {
@@ -59,4 +64,47 @@ int	ft_atohex(const char *str)
 		i++;
 	}
 	return (result);
+}
+
+void	write_error(void)
+{
+	write(2, "ERROR\n", 6);
+	exit(-1);
+}
+
+void	file_type(int ac, char **av)
+{
+	int	i;
+
+	i = 0;
+	if (ac != 2)
+		write_error();
+	while (av[1][i])
+		i++;
+	if (i < 5)
+		write_error();
+	if (av[1][i - 1] != 'f' || av[1][i - 2] != 'd'
+		|| av[1][i - 3] != 'f' || av[1][i - 4] != '.')
+		write_error();
+}
+
+int	give_height(char **av)
+{
+	int		height;
+	char	*line;
+	int		fd;
+
+	fd = open(av[1], O_RDONLY);
+	if (fd < 0)
+		write_error();
+	height = 0;
+	line = get_next_line(fd);
+	while (line)
+	{
+		height++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+	return (height);
 }
