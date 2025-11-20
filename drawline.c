@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:31:02 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/20 15:09:29 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 17:40:46 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,35 @@ int	max_width(int *widths, int height)
 	return (max);
 }
 
-double compute_final_scale(t_map *map, int win_w, int win_h)
+double	compute_final_scale(t_map *map, int win_w, int win_h)
 {
-	int	max_w;
+	int		max_w;
 	t_scale	scale;
-	int	z_range;
+	int		z_range;
 
 	max_w = max_width(map->width, map->height);
-	if (map->height > 500 || max_w > 500)
-		return (0.3);
-
 	scale.x = (win_w * 0.45) / max_w;
 	scale.y = (win_h * 0.45) / map->height;
-
+	scale.f = scale.x;
+	if(scale.x < 0.3 || scale.y < 0.3)
+	{
+		if(scale.y < scale.x)
+			return (scale.y);
+		else
+			return (scale.x);
+	}
+	
+	if (map->height > 500 || max_w > 500)
+		return (0.3);
 	z_range = compute_z_range(map);
-
 	if (z_range == 0)
 		scale.z = 9999999;
 	else
 		scale.z = (win_h * 0.45) / z_range;
-
-	scale.f = scale.x;
 	if (scale.y < scale.f)
 		scale.f = scale.y;
 	if (scale.z < scale.f)
 		scale.f = scale.z;
-
 	return (scale.f);
 }
 
@@ -71,24 +74,12 @@ t_point	cal_new_data(t_map map, int x, int y, double scale)
 	sin_angle = 0.5;
 	res.x = ((map.points[y][x].x - map.points[y][x].y)
 			* cos_angle) * scale;
-
 	res.y = ((map.points[y][x].x + map.points[y][x].y)
 			* sin_angle - map.points[y][x].z) * scale;
-
 	res.x += 750;
 	res.y += 700;
-
 	return (res);
 }
-
-void	my_pixel_put(t_window *w, int x, int y, int color)
-{
-	if (x < 0 || x >= 1500 || y < 0 || y >= 1500)
-		return ;
-
-	w->pixel[y * 1500 + x] = color;
-}
-
 
 void	draw_line(t_window *w, t_point a, t_point b, int colar)
 {
@@ -116,17 +107,12 @@ void	draw_line(t_window *w, t_point a, t_point b, int colar)
 	}
 }
 
-void	draw(t_window *window, t_map map)
+void	draw(t_window *window, t_map map, double scale, int y)
 {
 	int		x;
-	int		y;
 	t_point	a;
 	t_point	b;
-	double	scale;
 
-	y = 0;
-	x = 0;
-	scale = compute_final_scale(&map, 1500, 1500);
 	while (y < map.height)
 	{
 		x = 0;
@@ -147,5 +133,4 @@ void	draw(t_window *window, t_map map)
 		}
 		y++;
 	}
-
 }

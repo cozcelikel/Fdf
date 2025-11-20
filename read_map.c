@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 17:16:20 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/20 12:11:46 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 16:17:10 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,6 @@ int	fill_data(t_map *map, int width, char **data, int y)
 		x++;
 	}
 	return (0);
-}
-
-void	split_free(char **splited)
-{
-	int	i;
-
-	if (!splited)
-		return ;
-	i = 0;
-	while (splited[i])
-		free(splited[i++]);
-	free(splited);
 }
 
 int	process_line(t_map *map, char *line, int y)

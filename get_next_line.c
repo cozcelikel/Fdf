@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 12:11:35 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/16 02:41:06 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 16:31:02 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static char	*ft_read_store(int fd, char *remainder)
 	{
 		bytes = read(fd, temp, BUFFER_SIZE);
 		if (bytes < 0)
-			return (free(temp), free(remainder), NULL);
+			return (free_two_and_null(remainder, temp));
 		if (bytes == 0)
 			break ;
 		temp[bytes] = '\0';
 		new_remainder = ft_strjoin(remainder, temp);
 		if (!new_remainder)
-			return (free(remainder), free(temp), NULL);
+			return (free_two_and_null(remainder, temp));
 		free(remainder);
 		remainder = new_remainder;
 	}

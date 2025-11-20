@@ -6,7 +6,7 @@
 #    By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/10 14:56:46 by cozcelik          #+#    #+#              #
-#    Updated: 2025/11/20 15:06:10 by cozcelik         ###   ########.fr        #
+#    Updated: 2025/11/20 15:57:59 by cozcelik         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRC = main.c \
 	  read_map_utils.c \
 	  mlx.c \
 	  drawline.c \
-	  draw_line_utils.c
+	  draw_line_utils.c \
+	  error.c
 		
 OBJ = $(SRC:.c=.o)
 

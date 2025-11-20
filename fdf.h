@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 18:15:11 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/20 15:06:58 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/20 16:29:33 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ typedef struct s_point
 	int	y;
 	int	z;
 	int	color;
-	int	i;
-	int	j;
 }	t_point;
 
 typedef struct s_map
@@ -76,10 +74,19 @@ t_map	read_map(char **av);
 void	free_all(char **arr, int j);
 int		ft_atoi(const char *str);
 int		ft_atohex(const char *str);
-void	window(t_map *map);
-void	draw(t_window *window, t_map map);
+void	window(t_map *map, int s_len, int endian, int bbp);
+void	draw(t_window *window, t_map map, double scale, int y);
 void	draw_line(t_window *window, t_point a, t_point b, int colar);
 void	free_map(t_map *map);
 int		give_height(char **av);
 int		compute_z_range(t_map *map);
+double	compute_final_scale(t_map *map, int win_w, int win_h);
+void	my_pixel_put(t_window *w, int x, int y, int color);
+void	error_pixel(t_window window, t_map *map);
+void	error_window(t_window window, t_map *map);
+void	error_img(t_window window, t_map *map);
+void	error_mlx(t_map *map);
+void	split_free(char **splited);
+char	*free_two_and_null(char *s1, char *s2);
+
 #endif
