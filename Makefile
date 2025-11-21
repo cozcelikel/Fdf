@@ -6,14 +6,14 @@
 #    By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/10 14:56:46 by cozcelik          #+#    #+#              #
-#    Updated: 2025/11/21 09:55:33 by cozcelik         ###   ########.fr        #
+#    Updated: 2025/11/21 10:33:56 by cozcelik         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 CC = cc
 CFLAGS = -Wall -Wextra 
-MLX_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
+MLX_FLAGS = -Lminilibx -lmlx -lXext -lX11 -lm
 
 SRC = main.c \
 	  read_map.c \
@@ -31,18 +31,18 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C minilibx-linux
+	make -C minilibx
 	$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -Iminilibx-linux -c $< -o $@
+	$(CC) $(CFLAGS) -Iminilibx -c $< -o $@
 
 clean:
-	make -C minilibx-linux clean
+	make -C minilibx clean
 	rm -f $(OBJ)
 
 fclean: clean
-	make -C minilibx-linux clean
+	make -C minilibx clean
 	rm -f $(NAME)
 
 re: fclean all
