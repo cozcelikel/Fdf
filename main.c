@@ -6,12 +6,11 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 17:16:25 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/21 10:11:27 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/21 10:50:51 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include "mlx.h"
 
