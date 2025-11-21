@@ -6,13 +6,13 @@
 #    By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/10 14:56:46 by cozcelik          #+#    #+#              #
-#    Updated: 2025/11/20 15:57:59 by cozcelik         ###   ########.fr        #
+#    Updated: 2025/11/21 09:55:33 by cozcelik         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra 
 MLX_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
 SRC = main.c \

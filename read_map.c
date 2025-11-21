@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 17:16:20 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/20 16:17:10 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/21 10:02:36 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,9 @@ t_map	take_points(t_map map, int fd, int *flag)
 t_map	read_map_allocte(char **av)
 {
 	t_map	map;
+	int		i;
 
+	i = 0;
 	map.height = give_height(av);
 	map.points = malloc(sizeof(t_point *) * map.height);
 	if (!map.points)
@@ -117,6 +119,12 @@ t_map	read_map_allocte(char **av)
 	{
 		free(map.points);
 		write_error();
+	}
+	while (i < map.height)
+	{
+		map.points[i] = NULL;
+		map.width[i] = 0;
+		i++;
 	}
 	return (map);
 }
