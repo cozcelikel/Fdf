@@ -6,7 +6,7 @@
 /*   By: cozcelik <cozcelik@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:31:02 by cozcelik          #+#    #+#             */
-/*   Updated: 2025/11/21 10:46:29 by cozcelik         ###   ########.fr       */
+/*   Updated: 2025/11/21 14:53:48 by cozcelik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_point	cal_new_data(t_map map, int x, int y, double scale)
 	res.x = ((map.points[y][x].x - map.points[y][x].y)
 			* cos_angle) * scale;
 	res.y = ((map.points[y][x].x + map.points[y][x].y)
-			* sin_angle - map.points[y][x].z) * scale;
+			* sin_angle - (map.points[y][x].z / 2)) * scale;
 	res.x += 750;
 	res.y += 700;
 	return (res);
